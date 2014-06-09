@@ -70,7 +70,7 @@ sum(is.na(data$steps))
 ```
 ## [1] 2304
 ```
-So, 17568 out of 2304 is missing values.
+So, 2304 out of  17568 is missing values.
 
 #### Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
