@@ -41,7 +41,7 @@ Note that there are a number of days/intervals where there are missing values (c
 nrow(data)
 sum(is.na(data$steps))
 ```
-So, `r nrow(data)` out of `r sum(is.na(data$steps))` is missing values.
+So, `r sum(is.na(data$steps))` out of  `r nrow(data)` is missing values.
 
 #### Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
