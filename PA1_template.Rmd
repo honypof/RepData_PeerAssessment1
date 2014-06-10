@@ -45,16 +45,15 @@ So, `r sum(is.na(data$steps))` out of  `r nrow(data)` is missing values.
 
 #### Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
-Check the missing values in  the mean/median for that day
+Check how many date factors are in orignal data and cleaned data (NA omitted).
 ```{r}
-average.steps.date <- tapply(cleanData$steps, cleanData$date, mean)
-sum(is.na(average.steps.date))
-median.steps.date <- tapply(cleanData$steps, cleanData$date, median)
-sum(is.na(median.steps.date))
+length(levels(factor(cleanData$date)))
+length(levels(factor(data$date)))
 ```
-This indicates that we cannot use the mean/median for that day to fill in all of the missing values in the dataset. On the other hand, we can use the mean for that 5-minute interval, as indicated below.
+This indicates that we cannot use the mean/median for that day to fill in all of the missing values in the dataset, because those values cannot fill the missing valuse of some of days. On the other hand, we can use the mean for that 5-minute interval, as indicated below.
 ```{r}
-sum(is.na(average.steps.interval))
+length(levels(factor(cleanData$interval)))
+length(levels(factor(data$interval)))
 ```
 
 #### Create a new dataset that is equal to the original dataset but with the missing data filled in.
@@ -86,9 +85,9 @@ summary(steps.each.day2)
 ## Are there differences in activity patterns between weekdays and weekends?
 make datasets for weekdays and weekends.
 ```{r}
-data$weekday <- weekdays(data$date)
-data.weekday <- data[!(data$weekday == "Saturday" | data$weekday == "Sunday"), ]
-data.weekend <- data[(data$weekday == "Saturday" | data$weekday == "Sunday"), ]
+cleanData$weekday <- weekdays(cleanData$date)
+data.weekday <- cleanData[!(cleanData$weekday == "Saturday" | cleanData$weekday == "Sunday"), ]
+data.weekend <- cleanData[(cleanData$weekday == "Saturday" | cleanData$weekday == "Sunday"), ]
 ```
 Compare the histograms of the total number of steps taken each day
 ```{r}

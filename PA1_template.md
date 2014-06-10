@@ -74,33 +74,39 @@ So, 2304 out of  17568 is missing values.
 
 #### Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
-Check the missing values in  the mean/median for that day
+Check how many date factors are in orignal data and cleaned data (NA omitted).
 
 ```r
-average.steps.date <- tapply(cleanData$steps, cleanData$date, mean)
-sum(is.na(average.steps.date))
+length(levels(factor(cleanData$date)))
 ```
 
 ```
-## [1] 0
+## [1] 53
+```
+
+```r
+length(levels(factor(data$date)))
+```
+
+```
+## [1] 61
+```
+This indicates that we cannot use the mean/median for that day to fill in all of the missing values in the dataset, because those values cannot fill the missing valuse of some of days. On the other hand, we can use the mean for that 5-minute interval, as indicated below.
+
+```r
+length(levels(factor(cleanData$interval)))
+```
+
+```
+## [1] 288
 ```
 
 ```r
-median.steps.date <- tapply(cleanData$steps, cleanData$date, median)
-sum(is.na(median.steps.date))
+length(levels(factor(data$interval)))
 ```
 
 ```
-## [1] 0
-```
-This indicates that we cannot use the mean/median for that day to fill in all of the missing values in the dataset. On the other hand, we can use the mean for that 5-minute interval, as indicated below.
-
-```r
-sum(is.na(average.steps.interval))
-```
-
-```
-## [1] 0
+## [1] 288
 ```
 
 #### Create a new dataset that is equal to the original dataset but with the missing data filled in.
@@ -148,9 +154,9 @@ summary(steps.each.day2)
 make datasets for weekdays and weekends.
 
 ```r
-data$weekday <- weekdays(data$date)
-data.weekday <- data[!(data$weekday == "Saturday" | data$weekday == "Sunday"), ]
-data.weekend <- data[(data$weekday == "Saturday" | data$weekday == "Sunday"), ]
+cleanData$weekday <- weekdays(cleanData$date)
+data.weekday <- cleanData[!(cleanData$weekday == "Saturday" | cleanData$weekday == "Sunday"), ]
+data.weekend <- cleanData[(cleanData$weekday == "Saturday" | cleanData$weekday == "Sunday"), ]
 ```
 Compare the histograms of the total number of steps taken each day
 
